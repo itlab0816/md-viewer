@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e1e2e"/>
+      <stop offset="50%" style="stop-color:#313244"/>
+      <stop offset="100%" style="stop-color:#1e1e2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#89b4fa"/>
+      <stop offset="50%" style="stop-color:#cba6f7"/>
+      <stop offset="100%" style="stop-color:#89dceb"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="200" fill="url(#bg)" rx="12"/>
+  <!-- decorative dots -->
+  <circle cx="40" cy="40" r="4" fill="#89b4fa" opacity="0.4"/>
+  <circle cx="760" cy="40" r="4" fill="#cba6f7" opacity="0.4"/>
+  <circle cx="40" cy="160" r="4" fill="#89dceb" opacity="0.4"/>
+  <circle cx="760" cy="160" r="4" fill="#89b4fa" opacity="0.4"/>
+  <!-- accent line -->
+  <rect x="0" y="0" width="800" height="3" fill="url(#accent)" rx="2"/>
+  <!-- title -->
+  <text x="400" y="95" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="44" font-weight="700" fill="url(#accent)" text-anchor="middle">MD Viewer</text>
+  <!-- subtitle -->
+  <text x="400" y="135" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="16" fill="rgba(205,214,244,0.7)" text-anchor="middle">아름다운 마크다운 뷰어 데스크탑 앱</text>
+</svg>

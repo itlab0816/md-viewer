@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Pretendard ─────────────────────────────────────────── */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../../../node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2')
+       format('woff2-variations');
+}
+
+/* ── Base reset ─────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; overflow: hidden; }
+
+/* ── Dynamic defaults (overridden by useThemeApply) ─────── */
+:root {
+  --font-size-body: 15px;
+  --content-width: 720px;
+  --line-height-body: 1.7;
+}
+
+/* ── Font families ──────────────────────────────────────── */
+[data-font="system"]     { --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+[data-font="pretendard"] { --font-body: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif; }
+[data-font="serif"]      { --font-body: Georgia, 'Noto Serif', 'Times New Roman', serif; }
+[data-font="mono"]       { --font-body: 'Consolas', 'D2Coding', 'Fira Code', monospace; }
+
+/* ── Theme: Minimal Dark ────────────────────────────────── */
+[data-theme="minimal-dark"] {
+  --bg-app:          #000000;
+  --bg-panel:        #1c1c1e;
+  --bg-hover:        #2c2c2e;
+  --bg-elevated:     #2c2c2e;
+  --bg-active:       #3a3a3c;
+  --border:          #38383a;
+  --text-primary:    rgba(255,255,255,0.90);
+  --text-secondary:  rgba(255,255,255,0.60);
+  --text-muted:      rgba(255,255,255,0.30);
+  --text-placeholder:rgba(255,255,255,0.18);
+  --accent:          #3b82f6;
+  --accent-rgb:      59,130,246;
+  --accent-text:     #ffffff;
+  --code-bg:         #2c2c2e;
+  --code-fg:         #f9a8d4;
+  --quote-border:    #3b82f6;
+  --scrollbar:       rgba(255,255,255,0.15);
+  --scrollbar-hover: rgba(255,255,255,0.30);
+  --tab-active-bg:   #000000;
+  --prose-heading:   rgba(255,255,255,0.92);
+  --prose-body:      rgba(255,255,255,0.78);
+  --prose-link:      #60a5fa;
+  --prose-bold:      rgba(255,255,255,0.92);
+  --prose-hr:        #38383a;
+  --prose-quote:     rgba(255,255,255,0.50);
+  --prose-table-border: #38383a;
+  --prose-th-bg:     #2c2c2e;
+}
+
+/* ── Theme: Minimal Light ───────────────────────────────── */
+[data-theme="minimal-light"] {
+  --bg-app:          #ffffff;
+  --bg-panel:        #f5f5f7;
+  --bg-hover:        #e8e8ed;
+  --bg-elevated:     #f0f0f3;
+  --bg-active:       #d1d1d6;
+  --border:          #d1d1d6;
+  --text-primary:    #1d1d1f;
+  --text-secondary:  #515154;
+  --text-muted:      #86868b;
+  --text-placeholder:#adadb8;
+  --accent:          #0071e3;
+  --accent-rgb:      0,113,227;
+  --accent-text:     #ffffff;
+  --code-bg:         #f0f0f3;
+  --code-fg:         #d63384;
+  --quote-border:    #0071e3;
+  --scrollbar:       rgba(0,0,0,0.15);
+  --scrollbar-hover: rgba(0,0,0,0.30);
+  --tab-active-bg:   #ffffff;
+  --prose-heading:   #1d1d1f;
+  --prose-body:      #3d3d3f;
+  --prose-link:      #0071e3;
+  --prose-bold:      #1d1d1f;
+  --prose-hr:        #d1d1d6;
+  --prose-quote:     #6e6e73;
+  --prose-table-border: #d1d1d6;
+  --prose-th-bg:     #f5f5f7;
+}
+
+/* ── Theme: GitHub ──────────────────────────────────────── */
+[data-theme="github"] {
+  --bg-app:          #ffffff;
+  --bg-panel:        #f6f8fa;
+  --bg-hover:        #eaeef2;
+  --bg-elevated:     #f6f8fa;
+  --bg-active:       #dbe4ec;
+  --border:          #d0d7de;
+  --text-primary:    #24292f;
+  --text-secondary:  #656d76;
+  --text-muted:      #8c959f;
+  --text-placeholder:#afb8c1;
+  --accent:          #0969da;
+  --accent-rgb:      9,105,218;
+  --accent-text:     #ffffff;
+  --code-bg:         rgba(175,184,193,0.2);
+  --code-fg:         #cf222e;
+  --quote-border:    #d0d7de;
+  --scrollbar:       rgba(0,0,0,0.15);
+  --scrollbar-hover: rgba(0,0,0,0.30);
+  --tab-active-bg:   #ffffff;
+  --prose-heading:   #24292f;
+  --prose-body:      #24292f;
+  --prose-link:      #0969da;
+  --prose-bold:      #24292f;
+  --prose-hr:        #d0d7de;
+  --prose-quote:     #656d76;
+  --prose-table-border: #d0d7de;
+  --prose-th-bg:     #f6f8fa;
+}
+
+/* ── Theme: Notion ──────────────────────────────────────── */
+[data-theme="notion"] {
+  --bg-app:          #ffffff;
+  --bg-panel:        #fbfbfa;
+  --bg-hover:        #f0efec;
+  --bg-elevated:     #f7f6f3;
+  --bg-active:       #e8e7e3;
+  --border:          #e9e9e7;
+  --text-primary:    #37352f;
+  --text-secondary:  #787774;
+  --text-muted:      #9b9a97;
+  --text-placeholder:#c7c6c3;
+  --accent:          #2383e2;
+  --accent-rgb:      35,131,226;
+  --accent-text:     #ffffff;
+  --code-bg:         #f7f6f3;
+  --code-fg:         #eb5757;
+  --quote-border:    #9b9a97;
+  --scrollbar:       rgba(0,0,0,0.12);
+  --scrollbar-hover: rgba(0,0,0,0.25);
+  --tab-active-bg:   #ffffff;
+  --prose-heading:   #37352f;
+  --prose-body:      #37352f;
+  --prose-link:      #2383e2;
+  --prose-bold:      #37352f;
+  --prose-hr:        #e9e9e7;
+  --prose-quote:     #9b9a97;
+  --prose-table-border: #e9e9e7;
+  --prose-th-bg:     #fbfbfa;
+}
+
+/* ── Theme: Sepia ───────────────────────────────────────── */
+[data-theme="sepia"] {
+  --bg-app:          #f9f3e8;
+  --bg-panel:        #f2ead9;
+  --bg-hover:        #e8dfc8;
+  --bg-elevated:     #ede3cc;
+  --bg-active:       #d8cdb4;
+  --border:          #d4c5a9;
+  --text-primary:    #3d2b1f;
+  --text-secondary:  #7a5c45;
+  --text-muted:      #b8977a;
+  --text-placeholder:#cbb89a;
+  --accent:          #8b5a2b;
+  --accent-rgb:      139,90,43;
+  --accent-text:     #ffffff;
+  --code-bg:         #ede3cc;
+  --code-fg:         #8b2500;
+  --quote-border:    #8b5a2b;
+  --scrollbar:       rgba(61,43,31,0.2);
+  --scrollbar-hover: rgba(61,43,31,0.4);
+  --tab-active-bg:   #f9f3e8;
+  --prose-heading:   #3d2b1f;
+  --prose-body:      #5c4033;
+  --prose-link:      #8b5a2b;
+  --prose-bold:      #3d2b1f;
+  --prose-hr:        #d4c5a9;
+  --prose-quote:     #9a7a60;
+  --prose-table-border: #d4c5a9;
+  --prose-th-bg:     #f2ead9;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-hover); }
+
+/* ── Sidebar tree ──────────────────────────────────────── */
+aside ul { list-style: none; margin: 0; padding: 0; }
+aside li { margin: 0; padding: 0; }
+
+/* ── Prose typography (테마 변수 사용) ──────────────────── */
+.prose { color: var(--prose-body); font-family: var(--font-body); }
+.prose p { line-height: var(--line-height-body, 1.7); margin-bottom: 0.75rem; }
+.prose h1 { color: var(--prose-heading); font-size: 1.75rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; line-height: 1.3; }
+.prose h2 { color: var(--prose-heading); font-size: 1.375rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.625rem; line-height: 1.35; }
+.prose h3 { color: var(--prose-heading); font-size: 1.125rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; }
+.prose h4, .prose h5, .prose h6 { color: var(--prose-heading); font-weight: 600; margin-top: 1rem; margin-bottom: 0.375rem; }
+.prose strong { color: var(--prose-bold); font-weight: 700; }
+.prose blockquote { color: var(--prose-quote); font-style: normal; }
+.prose blockquote * { color: inherit; }
+.prose a { color: var(--prose-link); text-decoration: underline; text-underline-offset: 2px; }
+.prose a:hover { opacity: 0.8; }
+.prose ul, .prose ol { margin-bottom: 0.75rem; }
+.prose li { margin-bottom: 0.125rem; line-height: 1.65; }
+.prose pre { margin: 0; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1.25rem 0; }
+.prose thead th { background: var(--prose-th-bg); border: 1px solid var(--prose-table-border); padding: 0.5rem 0.875rem; text-align: left; font-weight: 600; color: var(--text-secondary); font-size: 0.8rem; letter-spacing: 0.02em; line-height: var(--line-height-body, 1.7); }
+.prose tbody td { border: 1px solid var(--prose-table-border); padding: 0.5rem 0.875rem; color: var(--text-secondary); line-height: var(--line-height-body, 1.7); }
+.prose tbody tr:hover { background: var(--bg-hover); }
+
+/* ── Search highlight ───────────────────────────────────── */
+mark.search-highlight { background: rgba(255,200,0,0.35); color: inherit; border-radius: 2px; }
+mark.search-highlight-active { background: rgba(255,160,0,0.70); color: inherit; }
+
+/* ── Shiki code blocks ──────────────────────────────────── */
+.shiki-wrapper .shiki {
+  padding: 0.875rem 1.125rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  margin: 0.75rem 0;
+}
+
