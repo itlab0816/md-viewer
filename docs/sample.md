@@ -295,6 +295,53 @@ stateDiagram-v2
 
 ---
 
+## 인라인 HTML
+
+마크다운 안에 HTML을 직접 작성할 수 있습니다. JavaScript는 실행되지 않습니다.
+
+### 색상 팔레트
+
+<div style="display:flex; gap:8px; margin:1rem 0; flex-wrap:wrap;">
+  <div style="width:60px; height:60px; border-radius:8px; background:#3b82f6;"></div>
+  <div style="width:60px; height:60px; border-radius:8px; background:#8b5cf6;"></div>
+  <div style="width:60px; height:60px; border-radius:8px; background:#22c55e;"></div>
+  <div style="width:60px; height:60px; border-radius:8px; background:#f59e0b;"></div>
+  <div style="width:60px; height:60px; border-radius:8px; background:#ef4444;"></div>
+  <div style="width:60px; height:60px; border-radius:8px; background:#ec4899;"></div>
+</div>
+
+### 배지 / 태그
+
+<div style="display:flex; gap:6px; flex-wrap:wrap; margin:0.75rem 0;">
+  <span style="background:rgba(59,130,246,0.15); color:#3b82f6; border:1px solid rgba(59,130,246,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">Electron</span>
+  <span style="background:rgba(139,92,246,0.15); color:#8b5cf6; border:1px solid rgba(139,92,246,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">React</span>
+  <span style="background:rgba(34,197,94,0.15); color:#22c55e; border:1px solid rgba(34,197,94,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">TypeScript</span>
+  <span style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">Tailwind</span>
+  <span style="background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">Vite</span>
+</div>
+
+### 레이아웃
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:1rem 0;">
+  <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:8px; padding:16px; text-align:center;">
+    <div style="font-size:1.5rem; margin-bottom:6px;">🎨</div>
+    <div style="font-weight:600; font-size:0.85rem;">테마</div>
+  </div>
+  <div style="background:rgba(139,92,246,0.08); border:1px solid rgba(139,92,246,0.2); border-radius:8px; padding:16px; text-align:center;">
+    <div style="font-size:1.5rem; margin-bottom:6px;">💻</div>
+    <div style="font-weight:600; font-size:0.85rem;">에디터</div>
+  </div>
+  <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:8px; padding:16px; text-align:center;">
+    <div style="font-size:1.5rem; margin-bottom:6px;">📐</div>
+    <div style="font-weight:600; font-size:0.85rem;">수식</div>
+  </div>
+</div>
+
+> [!NOTE]
+> `<script>` 태그와 이벤트 핸들러(`onclick` 등)는 보안상 실행되지 않습니다.
+
+---
+
 ## 구분선
 
 기본 구분선:

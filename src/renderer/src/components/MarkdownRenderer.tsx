@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import rehypeSlug from 'rehype-slug'
+import rehypeRaw from 'rehype-raw'
 import mermaid from 'mermaid'
 import { useHighlighter } from '../hooks/useMarkdownHighlight'
 import { useStore } from '../store/useStore'
@@ -129,7 +130,7 @@ export default function MarkdownRenderer({ content, filePath }: Props) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[rehypeKatex, rehypeSlug]}
+      rehypePlugins={[rehypeRaw, rehypeKatex, rehypeSlug]}
       components={components}
     >
       {content}
