@@ -1,10 +1,12 @@
 import React, { useRef, useEffect } from 'react'
 import { useStore } from '../store/useStore'
+import { parseFrontmatter } from '../utils/frontmatter'
 
 const MD_EXT = /\.(md|markdown|mdx)$/i
 
-function tabName(path: string): string {
-  return path.split(/[\\/]/).pop()?.replace(MD_EXT, '') ?? path
+function tabName(path: string, content: string): string {
+  const { data } = parseFrontmatter(content)
+  return data.title ?? path.split(/[\\/]/).pop()?.replace(MD_EXT, '') ?? path
 }
 
 export default function TabBar() {
@@ -42,7 +44,7 @@ export default function TabBar() {
             title={tab.path}
           >
             <span className="text-[11px]">📝</span>
-            <span className="text-[12px] max-w-[140px] truncate">{tabName(tab.path)}</span>
+            <span className="text-[12px] max-w-[140px] truncate">{tabName(tab.path, tab.content)}</span>
             {tab.modified && (
               <span className="text-[8px] flex-shrink-0" style={{ color: 'var(--accent)' }}>●</span>
             )}

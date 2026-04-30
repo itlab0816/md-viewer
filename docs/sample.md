@@ -1,8 +1,18 @@
+---
+title: MD Viewer 샘플 문서
+tags: [markdown, demo, electron]
+date: 2026-04-30
+description: MD Viewer에서 지원하는 마크다운 요소 모음
+---
+
 # MD Viewer 샘플 문서
 
 ![배너](./images/banner.svg)
 
 이 문서는 MD Viewer에서 지원하는 **마크다운 요소**를 한눈에 볼 수 있는 샘플입니다.
+
+- 내부 파일 링크: [linked.md 열기](./linked.md)
+- 앵커 링크: [수식 섹션으로 이동](#수식--katex)
 
 ---
 
@@ -292,6 +302,109 @@ stateDiagram-v2
 설정 패널에서 이미지 스타일을 **그림자 + 캡션**으로 변경하면 alt 텍스트가 캡션으로 표시됩니다.
 
 ![테마 프리셋 팔레트](./images/theme-palette.svg)
+
+---
+
+## 인라인 HTML (webview)
+
+` ```html ` 코드 블록은 완전한 브라우저 환경(webview)으로 렌더링됩니다. JavaScript가 실행됩니다.
+
+### 카운터
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 16px; font-family: system-ui, sans-serif; background: transparent; }
+  .counter { display: flex; align-items: center; gap: 16px; }
+  button {
+    width: 36px; height: 36px; border-radius: 8px; border: none;
+    background: #3b82f6; color: white; font-size: 1.2rem; cursor: pointer;
+  }
+  button:hover { background: #2563eb; }
+  #count { font-size: 2rem; font-weight: 700; min-width: 48px; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="counter">
+    <button onclick="update(-1)">−</button>
+    <span id="count">0</span>
+    <button onclick="update(1)">+</button>
+  </div>
+  <script>
+    let n = 0
+    function update(d) {
+      n += d
+      document.getElementById('count').textContent = n
+    }
+  </script>
+</body>
+</html>
+```
+
+### Canvas 애니메이션
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #0f0f1a; display: flex; justify-content: center; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="600" height="160"></canvas>
+<script>
+  const canvas = document.getElementById('c')
+  const ctx = canvas.getContext('2d')
+  const particles = Array.from({ length: 60 }, () => ({
+    x: Math.random() * 600, y: Math.random() * 160,
+    r: Math.random() * 2 + 1,
+    dx: (Math.random() - 0.5) * 1.2,
+    dy: (Math.random() - 0.5) * 1.2,
+    hue: Math.random() * 60 + 200
+  }))
+  function draw() {
+    ctx.fillStyle = 'rgba(15,15,26,0.2)'
+    ctx.fillRect(0, 0, 600, 160)
+    particles.forEach(p => {
+      ctx.beginPath()
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+      ctx.fillStyle = `hsla(${p.hue},80%,70%,0.8)`
+      ctx.fill()
+      p.x += p.dx; p.y += p.dy
+      if (p.x < 0 || p.x > 600) p.dx *= -1
+      if (p.y < 0 || p.y > 160) p.dy *= -1
+    })
+    requestAnimationFrame(draw)
+  }
+  draw()
+</script>
+</body>
+</html>
+```
+
+### 외부 HTML 파일 참조
+
+코드 블록 내용이 `.html` 경로 한 줄이면 파일을 읽어서 렌더링합니다.
+
+```html
+./counter.html
+```
+
+---
+
+## 각주
+
+마크다운 본문에 각주[^fn1]를 달 수 있습니다. 여러 개도 가능합니다[^fn2].
+
+긴 내용도 지원합니다[^fn3].
+
+[^fn1]: 첫 번째 각주입니다.
+[^fn2]: 두 번째 각주 — 클릭하면 본문으로 돌아갑니다.
+[^fn3]: 각주에는 **굵게**, *기울임* 등 인라인 마크다운을 쓸 수 있습니다.
 
 ---
 
