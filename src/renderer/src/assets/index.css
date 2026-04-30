@@ -228,3 +228,75 @@ mark.search-highlight-active { background: rgba(255,160,0,0.70); color: inherit;
   margin: 0.75rem 0;
 }
 
+
+/* Footnotes */
+.prose sup a[data-footnote-ref] {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.72em;
+  font-weight: 600;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+.prose sup a[data-footnote-ref]:hover { text-decoration: underline; }
+.prose .footnotes {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+}
+.prose .footnotes .sr-only { display: none; }
+.prose .footnotes ol { padding-left: 1.25rem; }
+.prose .footnotes li { margin-bottom: 0.4rem; line-height: 1.6; }
+.prose .footnotes a[data-footnote-backref] {
+  color: var(--accent);
+  text-decoration: none;
+  margin-left: 4px;
+  font-size: 0.9em;
+}
+
+/* ── Print / PDF ─────────────────────────────────────────── */
+@media print {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+
+  html, body, #root {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* UI chrome 숨김 */
+  header,
+  #app-tabbar,
+  #app-sidebar,
+  #app-right-panel {
+    display: none !important;
+  }
+
+  /* 레이아웃 컨테이너 print-friendly */
+  #app-root,
+  #app-body {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #app-main {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  /* 본문 전폭 */
+  article.prose {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* 페이지 나누기 */
+  h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  pre, blockquote, table, figure { page-break-inside: avoid; break-inside: avoid; }
+  img { max-width: 100% !important; page-break-inside: avoid; break-inside: avoid; }
+}

@@ -73,9 +73,10 @@ export const useStore = create<AppState>((set, get) => ({
 
   openTab: (file) => {
     const { tabs } = get()
-    const exists = tabs.find((t) => t.path === file.path)
+    const norm = (p: string) => p.replace(/\\/g, '/')
+    const exists = tabs.find((t) => norm(t.path) === norm(file.path))
     if (exists) {
-      set({ activeTabPath: file.path, currentFile: exists })
+      set({ activeTabPath: exists.path, currentFile: exists })
     } else {
       set({ tabs: [...tabs, file], activeTabPath: file.path, currentFile: file })
     }

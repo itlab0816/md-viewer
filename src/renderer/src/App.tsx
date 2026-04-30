@@ -8,6 +8,7 @@ import TableOfContents from './components/TableOfContents'
 import WelcomeScreen from './components/WelcomeScreen'
 import SettingsPanel from './components/SettingsPanel'
 import SearchBar from './components/SearchBar'
+import GlobalSearch from './components/GlobalSearch'
 import { useStore } from './store/useStore'
 import { useThemeApply } from './hooks/useThemeApply'
 import type { UserSettings } from './themes/types'
@@ -25,6 +26,7 @@ export default function App() {
   useThemeApply()
 
   const [searchOpen, setSearchOpen] = useState(false)
+  const [globalSearchOpen, setGlobalSearchOpen] = useState(false)
   const mainRef = useRef<HTMLElement>(null)
   const splitMainRef = useRef<HTMLElement>(null)
 
@@ -94,7 +96,29 @@ export default function App() {
           setSearchOpen(true)
         }
       }
-      if (e.key === 'Escape') setSearchOpen(false)
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'F') {
+        const { folderPath } = useStore.getState()
+        if (folderPath) { e.preventDefault(); setGlobalSearchOpen(true) }
+      }
+      if ((e.ctrlKey || e.metaKey) && (e.key === '=' || e.key === '+')) {
+        e.preventDefault()
+        const { userSettings, setUserSettings } = useStore.getState()
+        setUserSettings({ fontSize: Math.min(28, userSettings.fontSize + 1) })
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === '-') {
+        e.preventDefault()
+        const { userSettings, setUserSettings } = useStore.getState()
+        setUserSettings({ fontSize: Math.max(10, userSettings.fontSize - 1) })
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === '0') {
+        e.preventDefault()
+        useStore.getState().setUserSettings({ fontSize: 15 })
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+        const { currentFile } = useStore.getState()
+        if (currentFile) { e.preventDefault(); window.print() }
+      }
+      if (e.key === 'Escape') { setSearchOpen(false); setGlobalSearchOpen(false) }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
@@ -172,22 +196,24 @@ export default function App() {
 
   return (
     <div
+      id="app-root"
       className="flex flex-col h-screen overflow-hidden"
       style={{ background: 'var(--bg-app)', color: 'var(--text-primary)' }}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
+      {globalSearchOpen && <GlobalSearch onClose={() => setGlobalSearchOpen(false)} />}
       <TitleBar />
-      <TabBar />
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar onFolderOpen={openFolder} onFileOpen={openFile} />
+      <div id="app-tabbar"><TabBar /></div>
+      <div id="app-body" className="flex flex-1 overflow-hidden">
+        <div id="app-sidebar" style={{ display: 'contents' }}><Sidebar onFolderOpen={openFolder} onFileOpen={openFile} /></div>
 
         {!currentFile ? (
-          <main className="flex-1 overflow-y-auto">
+          <main id="app-main" className="flex-1 overflow-y-auto">
             <WelcomeScreen onFolderOpen={openFolder} onFileOpen={openFile} />
           </main>
         ) : viewMode === 'preview' ? (
-          <main ref={mainRef} className="flex-1 overflow-y-auto relative">
+          <main id="app-main" ref={mainRef} className="flex-1 overflow-y-auto relative">
             {searchOpen && <SearchBar containerRef={mainRef} onClose={() => setSearchOpen(false)} />}
             {previewPane(mainRef)}
           </main>
@@ -205,7 +231,7 @@ export default function App() {
               className="w-[1px] flex-shrink-0 cursor-col-resize hover:bg-[var(--accent)]"
               style={{ background: 'var(--border)' }}
             />
-            <main ref={splitMainRef} className="flex-1 overflow-y-auto relative">
+            <main id="app-main" ref={splitMainRef} className="flex-1 overflow-y-auto relative">
               {searchOpen && <SearchBar containerRef={splitMainRef} onClose={() => setSearchOpen(false)} />}
               {previewPane(splitMainRef)}
             </main>
@@ -213,7 +239,7 @@ export default function App() {
         )}
 
         {rightPanel && (
-          <div className="flex flex-shrink-0" style={{ width: rightPanelWidth }}>
+          <div id="app-right-panel" className="flex flex-shrink-0" style={{ width: rightPanelWidth }}>
             <div
               onMouseDown={onRightPanelMouseDown}
               className="w-[1px] flex-shrink-0 cursor-col-resize hover:bg-[var(--accent)]"

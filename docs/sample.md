@@ -1,8 +1,18 @@
+---
+title: MD Viewer 샘플 문서
+tags: [markdown, demo, electron]
+date: 2026-04-30
+description: MD Viewer에서 지원하는 마크다운 요소 모음
+---
+
 # MD Viewer 샘플 문서
 
 ![배너](./images/banner.svg)
 
 이 문서는 MD Viewer에서 지원하는 **마크다운 요소**를 한눈에 볼 수 있는 샘플입니다.
+
+- 내부 파일 링크: [linked.md 열기](./linked.md)
+- 앵커 링크: [수식 섹션으로 이동](#수식--katex)
 
 ---
 
@@ -295,50 +305,106 @@ stateDiagram-v2
 
 ---
 
-## 인라인 HTML
+## 인라인 HTML (webview)
 
-마크다운 안에 HTML을 직접 작성할 수 있습니다. JavaScript는 실행되지 않습니다.
+` ```html ` 코드 블록은 완전한 브라우저 환경(webview)으로 렌더링됩니다. JavaScript가 실행됩니다.
 
-### 색상 팔레트
+### 카운터
 
-<div style="display:flex; gap:8px; margin:1rem 0; flex-wrap:wrap;">
-  <div style="width:60px; height:60px; border-radius:8px; background:#3b82f6;"></div>
-  <div style="width:60px; height:60px; border-radius:8px; background:#8b5cf6;"></div>
-  <div style="width:60px; height:60px; border-radius:8px; background:#22c55e;"></div>
-  <div style="width:60px; height:60px; border-radius:8px; background:#f59e0b;"></div>
-  <div style="width:60px; height:60px; border-radius:8px; background:#ef4444;"></div>
-  <div style="width:60px; height:60px; border-radius:8px; background:#ec4899;"></div>
-</div>
-
-### 배지 / 태그
-
-<div style="display:flex; gap:6px; flex-wrap:wrap; margin:0.75rem 0;">
-  <span style="background:rgba(59,130,246,0.15); color:#3b82f6; border:1px solid rgba(59,130,246,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">Electron</span>
-  <span style="background:rgba(139,92,246,0.15); color:#8b5cf6; border:1px solid rgba(139,92,246,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">React</span>
-  <span style="background:rgba(34,197,94,0.15); color:#22c55e; border:1px solid rgba(34,197,94,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">TypeScript</span>
-  <span style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">Tailwind</span>
-  <span style="background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); padding:2px 10px; border-radius:999px; font-size:0.8rem; font-weight:600;">Vite</span>
-</div>
-
-### 레이아웃
-
-<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:1rem 0;">
-  <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:8px; padding:16px; text-align:center;">
-    <div style="font-size:1.5rem; margin-bottom:6px;">🎨</div>
-    <div style="font-weight:600; font-size:0.85rem;">테마</div>
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 16px; font-family: system-ui, sans-serif; background: transparent; }
+  .counter { display: flex; align-items: center; gap: 16px; }
+  button {
+    width: 36px; height: 36px; border-radius: 8px; border: none;
+    background: #3b82f6; color: white; font-size: 1.2rem; cursor: pointer;
+  }
+  button:hover { background: #2563eb; }
+  #count { font-size: 2rem; font-weight: 700; min-width: 48px; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="counter">
+    <button onclick="update(-1)">−</button>
+    <span id="count">0</span>
+    <button onclick="update(1)">+</button>
   </div>
-  <div style="background:rgba(139,92,246,0.08); border:1px solid rgba(139,92,246,0.2); border-radius:8px; padding:16px; text-align:center;">
-    <div style="font-size:1.5rem; margin-bottom:6px;">💻</div>
-    <div style="font-weight:600; font-size:0.85rem;">에디터</div>
-  </div>
-  <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:8px; padding:16px; text-align:center;">
-    <div style="font-size:1.5rem; margin-bottom:6px;">📐</div>
-    <div style="font-weight:600; font-size:0.85rem;">수식</div>
-  </div>
-</div>
+  <script>
+    let n = 0
+    function update(d) {
+      n += d
+      document.getElementById('count').textContent = n
+    }
+  </script>
+</body>
+</html>
+```
 
-> [!NOTE]
-> `<script>` 태그와 이벤트 핸들러(`onclick` 등)는 보안상 실행되지 않습니다.
+### Canvas 애니메이션
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #0f0f1a; display: flex; justify-content: center; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="600" height="160"></canvas>
+<script>
+  const canvas = document.getElementById('c')
+  const ctx = canvas.getContext('2d')
+  const particles = Array.from({ length: 60 }, () => ({
+    x: Math.random() * 600, y: Math.random() * 160,
+    r: Math.random() * 2 + 1,
+    dx: (Math.random() - 0.5) * 1.2,
+    dy: (Math.random() - 0.5) * 1.2,
+    hue: Math.random() * 60 + 200
+  }))
+  function draw() {
+    ctx.fillStyle = 'rgba(15,15,26,0.2)'
+    ctx.fillRect(0, 0, 600, 160)
+    particles.forEach(p => {
+      ctx.beginPath()
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+      ctx.fillStyle = `hsla(${p.hue},80%,70%,0.8)`
+      ctx.fill()
+      p.x += p.dx; p.y += p.dy
+      if (p.x < 0 || p.x > 600) p.dx *= -1
+      if (p.y < 0 || p.y > 160) p.dy *= -1
+    })
+    requestAnimationFrame(draw)
+  }
+  draw()
+</script>
+</body>
+</html>
+```
+
+### 외부 HTML 파일 참조
+
+코드 블록 내용이 `.html` 경로 한 줄이면 파일을 읽어서 렌더링합니다.
+
+```html
+./counter.html
+```
+
+---
+
+## 각주
+
+마크다운 본문에 각주[^fn1]를 달 수 있습니다. 여러 개도 가능합니다[^fn2].
+
+긴 내용도 지원합니다[^fn3].
+
+[^fn1]: 첫 번째 각주입니다.
+[^fn2]: 두 번째 각주 — 클릭하면 본문으로 돌아갑니다.
+[^fn3]: 각주에는 **굵게**, *기울임* 등 인라인 마크다운을 쓸 수 있습니다.
 
 ---
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 16px; font-family: system-ui, sans-serif; background: transparent; }
+  h3 { margin: 0 0 12px; font-size: 0.9rem; color: #888; }
+  .counter { display: flex; align-items: center; gap: 16px; }
+  button {
+    width: 36px; height: 36px; border-radius: 8px; border: none;
+    background: #8b5cf6; color: white; font-size: 1.2rem; cursor: pointer;
+  }
+  button:hover { background: #7c3aed; }
+  #count { font-size: 2rem; font-weight: 700; min-width: 48px; text-align: center; }
+</style>
+</head>
+<body>
+  <h3>외부 파일 (counter.html)</h3>
+  <div class="counter">
+    <button onclick="update(-1)">−</button>
+    <span id="count">0</span>
+    <button onclick="update(1)">+</button>
+  </div>
+  <script>
+    let n = 0
+    function update(d) {
+      n += d
+      document.getElementById('count').textContent = n
+    }
+  </script>
+</body>
+</html>

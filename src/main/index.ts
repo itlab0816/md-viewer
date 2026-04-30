@@ -96,7 +96,8 @@ async function createWindow(): Promise<BrowserWindow> {
     icon: join(__dirname, '../../build/icon.ico'),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      webviewTag: true
     }
   })
 
@@ -149,9 +150,6 @@ function buildMenu(mainWindow: BrowserWindow): void {
         { role: 'reload' },
         { role: 'toggleDevTools' },
         { type: 'separator' },
-        { role: 'resetZoom' },
-        { role: 'zoomIn' },
-        { role: 'zoomOut' },
         { type: 'separator' },
         { role: 'togglefullscreen' }
       ]
